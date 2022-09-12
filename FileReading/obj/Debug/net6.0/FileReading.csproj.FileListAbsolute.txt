@@ -1,0 +1,15 @@
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\bin\Debug\net6.0\FileReading.exe
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\bin\Debug\net6.0\FileReading.deps.json
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\bin\Debug\net6.0\FileReading.runtimeconfig.json
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\bin\Debug\net6.0\FileReading.dll
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\bin\Debug\net6.0\FileReading.pdb
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\FileReading.csproj.AssemblyReference.cache
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\FileReading.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\FileReading.AssemblyInfoInputs.cache
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\FileReading.AssemblyInfo.cs
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\FileReading.csproj.CoreCompileInputs.cache
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\FileReading.dll
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\refint\FileReading.dll
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\FileReading.pdb
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\FileReading.genruntimeconfig.cache
+C:\Users\Mubsshir\source\repos\FileReading\FileReading\obj\Debug\net6.0\ref\FileReading.dll

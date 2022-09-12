@@ -1,35 +1,14 @@
-﻿
-namespace FileReading
+﻿namespace FileReading
 {
-    public class FileMover
+    public class C_FileHandler
     {
-        public static void Fn_MoveFile(string SourceFilePath, string DestinationFullPath)
-        {
-            try
-            {
-                File.Move(SourceFilePath, DestinationFullPath);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error catched: " + ex.Message);
-                string NewFileName = DestinationFullPath;
-                int count = 1;
-                while (File.Exists(NewFileName))
-                {
-                    NewFileName = Path.Combine(Path.GetDirectoryName(NewFileName), Path.GetFileNameWithoutExtension(SourceFilePath) + count + Path.GetExtension(SourceFilePath));
-                    count++;
-                }
-                File.Move(SourceFilePath, NewFileName);
-            }
-        }
-
         public static void Fn_MakeSubDirectories(string DirectoryPath)
         {
-            Console.WriteLine("Creating Folders.......\n");
+            Console.WriteLine("Creating Sub-directories .......\n");
             if (Directory.Exists(DirectoryPath + @"\Backup") && Directory.Exists(DirectoryPath + @"\Converted"))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Folders Already Exists\n");
+                Console.WriteLine("Sub-directories already Exists\n");
                 Console.ResetColor();
             }
             else
@@ -37,7 +16,7 @@ namespace FileReading
                 Directory.CreateDirectory(DirectoryPath + @"\Backup");
                 Directory.CreateDirectory(DirectoryPath + @"\Converted");
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Sub-Directories Created\n");
+                Console.WriteLine("Sub-Directories {0} and {1} Created\n", DirectoryPath + @"\Backup", DirectoryPath + @"\Converted");
                 Console.ResetColor();
             }
         }
@@ -46,23 +25,41 @@ namespace FileReading
             List<string> Files = Directory.GetFiles(path, "*.xml", SearchOption.TopDirectoryOnly).ToList();
             string ConvertedFileDir = path + @"\Converted\";
             string BackupFileDir = path + @"\Backup\";
-
-            foreach (string File in Files)
+            if (!Directory.Exists(ConvertedFileDir) || !Directory.Exists(BackupFileDir))
             {
-                string fileName = Path.GetFileName(File);
-                string newXML = ReadXML.Fn_ReadXML(File);
-                Console.WriteLine(newXML);
-                using (FileStream file = new FileStream(ConvertedFileDir + fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                Fn_MakeSubDirectories(path);
+            }
+            foreach (string file in Files)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                string fileExtension = Path.GetExtension(file);
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("___________________________________________\nWorking On-->"+fileName+fileExtension);
+                if (File.Exists(ConvertedFileDir+fileName+fileExtension)||File.Exists(BackupFileDir+fileName+ fileExtension))
                 {
-                    StreamWriter streamWriter = new StreamWriter(file);
-                    streamWriter.Write(newXML);
-                    streamWriter.Close();
+                    Console.WriteLine("File already exists");
+                    string newFileName = fileName;
+                    int count = 1;
+                    while(File.Exists(ConvertedFileDir + newFileName + fileExtension)|| File.Exists(BackupFileDir + newFileName + fileExtension))
+                    {
+                        newFileName = fileName + "__" + count;
+                        count++;
+                    }
+                    Console.WriteLine("\nRenamed File-->{0}\n___________________________________________", newFileName + fileExtension);
+                    fileName = newFileName;
 
                 }
-                Fn_MoveFile(File, BackupFileDir + fileName);
+                string newXML = ReadXML.Fn_ReadXML(file);
+                using (FileStream NewFile = new FileStream(ConvertedFileDir + fileName+fileExtension, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                {
+                    StreamWriter streamWriter = new StreamWriter(NewFile);
+                    streamWriter.Write(newXML);
+                    streamWriter.Close();
+                }
+                File.Move(file, BackupFileDir + fileName+fileExtension);
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("New File Created: " + ConvertedFileDir + fileName);
-                Console.WriteLine("File: {0}  Moved To {1}: ", fileName, BackupFileDir);
+                Console.WriteLine("New File Created: " + ConvertedFileDir + fileName+fileExtension);
+                Console.WriteLine("File: {0}  Moved To {1} ", fileName, BackupFileDir);
                 Console.ResetColor();
             }
         }
